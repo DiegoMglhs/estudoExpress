@@ -24,15 +24,10 @@ app.use(express.json());
 const projects = [];
 
 app.get('/projects', (request,response) => {
-    const {title, owner} = request.query;
-    console.log(title);
-    console.log(owner);
-
-    return response.json([
-        'Projeto 1',
-        'Projeto 2',
-        'Projeto 100'
-    ]);
+    // const {title, owner} = request.query;
+    
+    console.log(projects);
+    return response.json(projects);
 });
 
 app.post('/projects', (request,response) =>{
@@ -42,7 +37,7 @@ app.post('/projects', (request,response) =>{
 
     projects.push(project); // esse push vai jogar a criação do nosso projeto para o array.
     console.log(project.id);
-    
+
     return response.json(project); //sempre retornar o projeto recem criado e nunca exibir a lista completa.
 });
 
