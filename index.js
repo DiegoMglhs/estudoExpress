@@ -1,6 +1,8 @@
-const { request, response } = require('express');
 const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+
 const app = express();
+app.use(express.json());
 
 // console.log(app);
 /**
@@ -15,11 +17,11 @@ const app = express();
  *  
  * QUERY PARSMS: Vamos usar principalmente para filtros e paginação
  * ROUTE PARAMS: Ele serve para Identificar recursos na hora de atualizaar ou deletar.
- * REQUEST PARAMS:
+ * REQUEST Body: Resto do conteudo na hora de criar ou editar um recurso
  * 
  */
 
-
+const projects = [];
 
 app.get('/projects', (request,response) => {
     const {title, owner} = request.query;
@@ -34,13 +36,14 @@ app.get('/projects', (request,response) => {
 });
 
 app.post('/projects', (request,response) =>{
-    return response.json([
-        'Projeto 1',
-        'Projeto 2',
-        'Projeto 3',
-        'Projeto 4',
-        'Projeto 5'
-    ]);
+    const {title, owner} = request.body;
+    
+    const project = {id: uuidv4(), title, owner,};
+
+    projects.push(project); // esse push vai jogar a criação do nosso projeto para o array.
+    console.log(project.id);
+    
+    return response.json(project); //sempre retornar o projeto recem criado e nunca exibir a lista completa.
 });
 
 app.put('/projects/:id', (request,response) =>{
